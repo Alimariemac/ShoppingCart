@@ -17,9 +17,9 @@ namespace FinalShoppingCart.Models
         public string Phone { get; set; }
         public DateTime OrderDate { get; set; }
         public decimal Total { get; set; }
-        public string UserId { get; set; }
+        public string CustomerId { get; set; }
 
-       /* public virtual ApplicationUser Customer { get; set; }*/
+        public virtual ApplicationUser Customer { get; set; }
         public virtual ICollection<OrderDetail> OrderDetails { get; set; }
 }
 }

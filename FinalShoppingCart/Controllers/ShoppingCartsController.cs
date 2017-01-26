@@ -48,7 +48,7 @@ namespace FinalShoppingCart.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,ItemId,UserId,Count,Created")] ShoppingCart shoppingCart)
+        public ActionResult Create([Bind(Include = "Id,ItemId,CustomerId,Count,Created")] ShoppingCart shoppingCart)
         {
             if (ModelState.IsValid)
             {
@@ -82,7 +82,7 @@ namespace FinalShoppingCart.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,ItemId,UserId,Count,Created")] ShoppingCart shoppingCart)
+        public ActionResult Edit([Bind(Include = "Id,ItemId,CustomerId,Count,Created")] ShoppingCart shoppingCart)
         {
             if (ModelState.IsValid)
             {
