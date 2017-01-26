@@ -8,18 +8,11 @@ namespace FinalShoppingCart.Models
     public class ShoppingCart
     {
         public int Id { get; set; }
-        public bool Completed { get; set; }
-        public string Address { get; set; }
-        public string City { get; set; }
-        public string State { get; set; }
-        public string Zipcode { get; set; }
-        public string Country { get; set; }
-        public string Phone { get; set; }
-        public DateTime OrderDate { get; set; }
-        public decimal Total { get; set; }
-        public string CustomerId { get; set; }
-
-        public virtual ApplicationUser Customer { get; set; }
-        public virtual ICollection<OrderDetail> OrderDetails { get; set; }
-}
+        public int ItemId { get; set; }
+        public string UserId { get; set; }
+        public int Count { get; set; }
+        public DateTime Created { get; set; }
+        public virtual Item Item { get; set; }
+        /*public virtual ApplicationUser Customer { get; set; }*/
+    }
 }
