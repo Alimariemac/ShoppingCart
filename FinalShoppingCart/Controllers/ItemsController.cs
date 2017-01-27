@@ -15,6 +15,7 @@ namespace FinalShoppingCart.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Items
+        [Authorize]
         public ActionResult Index()
         {
             return View(db.Items.ToList());
@@ -36,6 +37,7 @@ namespace FinalShoppingCart.Controllers
         }
 
         // GET: Items/Create
+        [Authorize (Roles = "Admin")]
         public ActionResult Create()
         {
             return View();
@@ -59,6 +61,7 @@ namespace FinalShoppingCart.Controllers
         }
 
         // GET: Items/Edit/5
+        [Authorize(Roles = "Admin")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -78,6 +81,7 @@ namespace FinalShoppingCart.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public ActionResult Edit([Bind(Include = "Id,Name,Price,MediaUrl,Description,Created,Updated")] Item item)
         {
             if (ModelState.IsValid)
@@ -90,6 +94,7 @@ namespace FinalShoppingCart.Controllers
         }
 
         // GET: Items/Delete/5
+        [Authorize(Roles = "Admin")]
         public ActionResult Delete(int? id)
         {
             if (id == null)
