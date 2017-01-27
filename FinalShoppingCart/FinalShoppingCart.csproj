@@ -180,6 +180,7 @@
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\ImageUploadValidator.cs" />
     <Compile Include="Models\Item.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Order.cs" />
@@ -189,6 +190,12 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Images\1.jpg" />
+    <Content Include="Images\b1.jpg" />
+    <Content Include="Images\b2.jpg" />
+    <Content Include="Images\b3.jpg" />
+    <Content Include="Images\b4.jpg" />
+    <Content Include="Images\b5.jpg" />
     <Content Include="Images\backpack.jpg" />
     <Content Include="Images\bag1.jpeg" />
     <Content Include="Content\bootstrap.css" />
@@ -202,10 +209,43 @@
     <Content Include="Content\Site.css" />
     <Content Include="Images\bag2.jpg" />
     <Content Include="Images\bag3.jpg" />
+    <Content Include="Images\blo.jpg" />
     <Content Include="Images\cart.png" />
+    <Content Include="Images\close_1.png" />
+    <Content Include="Images\co.png" />
     <Content Include="Images\hat.jpg" />
+    <Content Include="Images\img-sprite.png" />
+    <Content Include="Images\lo.png" />
+    <Content Include="Images\lo1.png" />
+    <Content Include="Images\lo2.png" />
+    <Content Include="Images\lo3.png" />
+    <Content Include="Images\lo4.png" />
+    <Content Include="Images\lo5.png" />
     <Content Include="Images\logo.png" />
     <Content Include="Images\luggage.jpg" />
+    <Content Include="Images\p1.jpg" />
+    <Content Include="Images\p2.jpg" />
+    <Content Include="Images\p3.jpg" />
+    <Content Include="Images\p4.jpg" />
+    <Content Include="Images\pi.jpg" />
+    <Content Include="Images\pi1.jpg" />
+    <Content Include="Images\pi2.jpg" />
+    <Content Include="Images\pi3.jpg" />
+    <Content Include="Images\pi4.jpg" />
+    <Content Include="Images\pi5.jpg" />
+    <Content Include="Images\pic1.jpg" />
+    <Content Include="Images\pic2.jpg" />
+    <Content Include="Images\pro.jpg" />
+    <Content Include="Images\product1.jpg" />
+    <Content Include="Images\s1.jpg" />
+    <Content Include="Images\si.jpg" />
+    <Content Include="Images\si1.jpg" />
+    <Content Include="Images\si2.jpg" />
+    <Content Include="Images\t1.jpg" />
+    <Content Include="Images\t2.jpg" />
+    <Content Include="Images\t3.jpg" />
+    <Content Include="Images\t4.jpg" />
+    <Content Include="Images\tick1.png" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
@@ -283,6 +323,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Images\uploads\" />
+    <Folder Include="Scripts\tinymce\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

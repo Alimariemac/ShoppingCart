@@ -7,13 +7,15 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using FinalShoppingCart.Models;
+using System.IO;
+using ShoppingApp.Models;
 
 namespace FinalShoppingCart.Controllers
 {
     public class ItemsController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
-
+        private ImageUploadValidator validator = new ImageUploadValidator();
         // GET: Items
         [Authorize]
         public ActionResult Index()
@@ -37,7 +39,7 @@ namespace FinalShoppingCart.Controllers
         }
 
         // GET: Items/Create
-        [Authorize (Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         public ActionResult Create()
         {
             return View();
@@ -48,10 +50,17 @@ namespace FinalShoppingCart.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Name,Price,MediaUrl,Description,Created,Updated")] Item item)
+        public ActionResult Create([Bind(Include = "Id,Name,Price,MediaUrl,Description")] Item item, HttpPostedFileBase Image)
         {
             if (ModelState.IsValid)
             {
+                if (validator.IsWebFriendlyImage(Image))
+                {
+                    var fileName = Path.GetFileName(Image.FileName);
+                    Image.SaveAs(Path.Combine(Server.MapPath("~/images/uploads/"), fileName));
+                    item.MediaUrl = "~/images/uploads/" + fileName;
+                }
+                item.Created = System.DateTime.Now;
                 db.Items.Add(item);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -81,7 +90,6 @@ namespace FinalShoppingCart.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Admin")]
         public ActionResult Edit([Bind(Include = "Id,Name,Price,MediaUrl,Description,Created,Updated")] Item item)
         {
             if (ModelState.IsValid)
