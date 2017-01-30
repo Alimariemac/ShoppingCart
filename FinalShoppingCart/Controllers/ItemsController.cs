@@ -57,8 +57,8 @@ namespace FinalShoppingCart.Controllers
                 if (validator.IsWebFriendlyImage(Image))
                 {
                     var fileName = Path.GetFileName(Image.FileName);
-                    Image.SaveAs(Path.Combine(Server.MapPath("~/images/uploads/"), fileName));
-                    item.MediaUrl = "~/images/uploads/" + fileName;
+                    Image.SaveAs(Path.Combine(Server.MapPath("~/Images/uploads/"), fileName));
+                    item.MediaUrl = "~/Images/uploads/" + fileName;
                 }
                 item.Created = System.DateTime.Now;
                 db.Items.Add(item);
@@ -69,7 +69,7 @@ namespace FinalShoppingCart.Controllers
             return View(item);
         }
 
-        // GET: Items/Edit/5
+        /*// GET: Items/Edit/5
         [Authorize(Roles = "Admin")]
         public ActionResult Edit(int? id)
         {
@@ -90,16 +90,59 @@ namespace FinalShoppingCart.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Name,Price,MediaUrl,Description,Created,Updated")] Item item)
+        public ActionResult Edit([Bind(Include = "Id,Name,Price,MediaUrl,Description,Created,Updated")] Item item, HttpPostedFileBase Image)
         {
             if (ModelState.IsValid)
             {
+                if (validator.IsWebFriendlyImage(Image))
+                {
+                    var fileName = Path.GetFileName(Image.FileName);
+                    Image.SaveAs(Path.Combine(Server.MapPath("~/Images/uploads/"), fileName));
+                    item.MediaUrl = "~/Images/uploads/" + fileName;
+                }
                 db.Entry(item).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
             return View(item);
-        }
+        }*/
+        [Authorize(Roles = "Admin")]
+         public ActionResult Edit(int? id)
+         {
+             if (id == null)
+             {
+                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+             }
+             Item item = db.Items.Find(id);
+             if (item == null)
+             {
+                 return HttpNotFound();
+             }
+             return View(item);
+         } 
+
+         // POST: Items/Edit/5
+         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+         [HttpPost]
+          [ValidateAntiForgeryToken]
+          public ActionResult Edit([Bind(Include = "Id,Name,Price,MediaUrl,Description,Created,Updated")] Item item, HttpPostedFileBase Image)
+          {
+              if (ModelState.IsValid)
+              {
+                if (validator.IsWebFriendlyImage(Image))
+                {
+                    var fileName = Path.GetFileName(Image.FileName);
+                    Image.SaveAs(Path.Combine(Server.MapPath("~/Images/uploads/"), fileName));
+                    item.MediaUrl = "~/Images/uploads/" + fileName;
+                }
+                db.Entry(item).State = EntityState.Modified;
+                  db.SaveChanges();
+                  return RedirectToAction("Index");
+              }
+              return View(item);
+          }
+        
 
         // GET: Items/Delete/5
         [Authorize(Roles = "Admin")]
