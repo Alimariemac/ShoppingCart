@@ -4,18 +4,6 @@
 <body>
 <div class="banner">
     <div class="container">
-        <script src="~/Scripts/responsiveslides.min.js"></script>
-        <script>
-    $(function () {
-      $("#slider").responsiveSlides({
-      	auto: true,
-      	nav: true,
-      	speed: 500,
-        namespace: "callbacks",
-        pager: true,
-      });
-    });
-        </script>
         <div id="top" class="callbacks_container">
             <ul class="rslides" id="slider">
                 <li>
@@ -175,4 +163,18 @@
         <p>© 2015 New store All Rights Reserved | Design by  <a href="http://w3layouts.com/" target="_blank">W3layouts</a> </p>
     </div>
 </div>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/Scripts/responsiveslides.min.js")
+    <script src="~/Scripts/responsiveslides.min.js"></script>
+    <script>
+    $(function () {
+      $("#slider").responsiveSlides({
+      	auto: true,
+      	nav: true,
+      	speed: 500,
+        namespace: "callbacks",
+        pager: true,
+      });
+    });
+    </script>
 </body>

@@ -135,9 +135,11 @@ namespace FinalShoppingCart.Controllers
                     var fileName = Path.GetFileName(Image.FileName);
                     Image.SaveAs(Path.Combine(Server.MapPath("~/Images/uploads/"), fileName));
                     item.MediaUrl = "~/Images/uploads/" + fileName;
+                   
                 }
                 db.Entry(item).State = EntityState.Modified;
-                  db.SaveChanges();
+                    item.Updated = System.DateTime.Now;
+                    db.SaveChanges();
                   return RedirectToAction("Index");
               }
               return View(item);

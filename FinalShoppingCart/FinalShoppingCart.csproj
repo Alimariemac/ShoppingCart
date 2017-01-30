@@ -246,6 +246,12 @@
     <Content Include="Images\t3.jpg" />
     <Content Include="Images\t4.jpg" />
     <Content Include="Images\tick1.png" />
+    <Content Include="Images\uploads\backpack.jpg" />
+    <Content Include="Images\uploads\backpack2.jpg" />
+    <Content Include="Images\uploads\backpack3.jpg" />
+    <Content Include="Images\uploads\bag3.jpg" />
+    <Content Include="Images\uploads\luggage.jpg" />
+    <Content Include="Images\uploads\wolfbag.jpg" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
@@ -323,7 +329,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Images\uploads\" />
     <Folder Include="Scripts\tinymce\" />
   </ItemGroup>
   <ItemGroup>
