@@ -314,8 +314,9 @@ height: 35px;
 	width:100%;
 	height:20em;
     object-fit:cover;
-
 }
+
+
 .grid-top p{
   font-size: 1.1em;
   margin: 0.3em 0 0;
@@ -829,7 +830,7 @@ p.m_11 {
 /*----*/
 h3.cate {
 	color: #000;
-	  border-bottom: 1px solid #000;
+	 
   width: 69%;
 	font-size: 2em;
     font-family: 'Lato', sans-serif;
@@ -907,7 +908,7 @@ ul.kid-menu li,.menu ul li{
 }
 h3.best {
   color: #000;
-  border-bottom: 1px solid #000;
+  im
   width: 81%;
   font-size: 2em;
     font-family: 'Lato', sans-serif;
@@ -949,8 +950,7 @@ a.shop-now:hover{
 	  background:#EF5F21;
 }
 h3.tag {
-	color: #000;
-	  border-bottom: 1px solid #000;
+	color: #000;	
   width: 32%;
 	font-size: 2em;
     font-family: 'Lato', sans-serif;
@@ -1053,6 +1053,28 @@ p.tun{
 
 .product-at{
 	position: relative;
+}
+
+.fit-img {
+    display:block;
+    width:100%;
+	height:10em;
+    object-fit:cover;
+}
+
+.fit-img5 {
+    display:block;
+    width:100%;
+	height:5em;
+    object-fit:cover;
+}
+
+
+.fit-img20 {
+    display:block;
+    width:100%;
+	height:20em;
+    object-fit:cover;
 }
 .product-at:hover .pro-grid{
 	display:block;
