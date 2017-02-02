@@ -24,7 +24,7 @@ namespace FinalShoppingCart.Controllers
             var shoppingCarts = db.ShoppingCarts.Where(s => s.CustomerId == user.Id).ToList();       
             if (shoppingCarts != null)
             {
-                return View(db.ShoppingCarts.ToList());
+                return View(shoppingCarts);
                              
             }
 

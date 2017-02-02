@@ -17,7 +17,7 @@ namespace FinalShoppingCart.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
         private ImageUploadValidator validator = new ImageUploadValidator();
         // GET: Items
-        [Authorize]
+       
         public ActionResult Index()
         {
             return View(db.Items.ToList());
