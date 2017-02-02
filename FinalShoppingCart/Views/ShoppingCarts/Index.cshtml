@@ -1,4 +1,5 @@
 ﻿@model IEnumerable<FinalShoppingCart.Models.ShoppingCart>
+@using Microsoft.AspNet.Identity
 
 @{
     ViewBag.Title = "Index";
@@ -34,6 +35,7 @@
         <td>
             @Html.DisplayFor(modelItem => item.CustomerId)
         </td>
+       @*@HttpContext.Current.User.Identity.GetUserId()*@
         <td>
             @Html.DisplayFor(modelItem => item.Count)
         </td>

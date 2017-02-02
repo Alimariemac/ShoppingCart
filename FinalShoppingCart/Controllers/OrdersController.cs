@@ -7,18 +7,36 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using FinalShoppingCart.Models;
+using Microsoft.AspNet.Identity;
 
 namespace FinalShoppingCart.Controllers
 {
     public class OrdersController : Controller
     {
+
         private ApplicationDbContext db = new ApplicationDbContext();
+
+        public ActionResult Index()
+        {
+            return View(db.Orders.ToList());
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteConfirmed(int id)
+        {
+            Order order = db.Orders.Find(id);
+            db.Orders.Remove(order);
+            db.SaveChanges();
+            return RedirectToAction("Index");
+
+        }
+        /*private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Orders
         public ActionResult Index()
         {
             return View(db.Orders.ToList());
-        }
+        }*/
 
         // GET: Orders/Details/5
         public ActionResult Details(int? id)
@@ -42,9 +60,52 @@ namespace FinalShoppingCart.Controllers
         }
 
         // POST: Orders/Create
+
+        [HttpPost]
+
+        [ValidateAntiForgeryToken]
+
+        public ActionResult Create([Bind(Include = "Address,City,State,Zipcode,Country,Phone")] Order order)
+
+        {
+
+                var user = db.Users.Find(User.Identity.GetUserId());
+                var shoppingcart = db.ShoppingCarts.Where(s => s.CustomerId == user.Id).ToList();
+                decimal totalAmt = 0;
+                if (shoppingcart.Count != 0)
+
+{
+
+                    if (ModelState.IsValid)
+                    {
+                    foreach (var product in shoppingcart)
+                    {
+                    OrderDetail orderdetail = new OrderDetail();
+                    orderdetail.ItemId = product.ItemId;
+                    orderdetail.OrderId = order.Id;
+                    orderdetail.Quantity += product.Count;
+                    orderdetail.UnitPrice = product.Item.Price;
+                    totalAmt += (product.Count* product.Item.Price);
+
+                    db.OrderDetails.Add(orderdetail);
+                    }
+                    order.Total = totalAmt;
+                    order.Completed = false;
+                    order.OrderDate = DateTime.Now;
+                    order.CustomerId = user.Id;
+                    db.Orders.Add(order);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                    }
+                }
+
+                ViewBag.NoItem = "There's no item to order";;
+                return View(order);
+
+}
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
+       /* [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Id,Completed,Address,City,State,Zipcode,Country,Phone,OrderDate,Total,CustomerId")] Order order)
         {
@@ -71,7 +132,8 @@ namespace FinalShoppingCart.Controllers
                 return HttpNotFound();
             }
             return View(order);
-        }
+        }*/
+
 
         // POST: Orders/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
@@ -104,7 +166,7 @@ namespace FinalShoppingCart.Controllers
             return View(order);
         }
 
-        // POST: Orders/Delete/5
+       /* // POST: Orders/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
@@ -114,7 +176,7 @@ namespace FinalShoppingCart.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
-
+        */
         protected override void Dispose(bool disposing)
         {
             if (disposing)

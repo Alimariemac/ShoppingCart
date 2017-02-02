@@ -155,7 +155,7 @@
                         <div class="clearfix"> </div>
                     </div>
                     <div class="product-go">
-                        <div class=" fashion-grid">
+                        <div class="fashion-grid">
                             <a href="#"><img class="fit-img5" src="~/Images/uploads/backpack.jpg" alt=""></a>
 
                         </div>
@@ -186,24 +186,37 @@
             </div>
    <!--Items to buy section-->
             
-            <div class="col-md-9 product1">
+   @foreach (var item in Model)
+   {
+    <div class="col-md-4 bottom-cd simpleCart_shelfItem" style="padding-bottom:2em;">
+        <div class="product-at ">
+            <a href=@Url.Action("Details", new { id = item.Id })>
+                <img class="fit-img20" src="@Url.Content(item.MediaUrl)" alt="" />
+                <div class="pro-grid">
+                   
+                    <span class="buy-in">Buy Now</span>
+                </div>
+            </a>
+        </div>
+        <p class="tun">@Html.DisplayFor(modelItem => item.Name)</p>
+        @using (Html.BeginForm("Create", "ShoppingCarts", new { Itemid = item.Id }, FormMethod.Post))
 
-                <div class="bottom-product">
-@foreach (var item in Model)
-{
-                    <div class="col-md-4 bottom-cd simpleCart_shelfItem" style="padding-bottom:2em;">
-                        <div class="product-at ">
-                            <a href=@Url.Action("Details", new { id = item.Id })>
-                                <img class="fit-img20" src="@Url.Content(item.MediaUrl)" alt=""/>
-                                <div class="pro-grid">
-                                    <span class="buy-in">Buy Now</span>
-                                </div>
-                            </a>
-                        </div>
-                        <p class="tun">@Html.DisplayFor(modelItem => item.Name)</p>
-                        <a href="#" class="item_add"><p class="number item_price"><i> </i>@Html.DisplayFor(modelItem => item.Price)</p></a>
-                    </div>
-}
+        {@Html.AntiForgeryToken()        
+            <button class="item_add"><p class="number item_price"><i> </i>@Html.DisplayFor(modelItem => item.Price)</p></button>
+            /*<a href="#" class="item_add"><p class="number item_price"><i> </i>@Html.DisplayFor(modelItem => item.Price)</p></a>}*/
+            /*<a class="item_add"><p class="number item_price"><i> </i>@Html.DisplayFor(modelItem => item.Price)</p></a>*/
+        }
+        @if (User.IsInRole("Admin"))
+        {
+            @Html.ActionLink("Edit", "Edit", new { id = item.Id })
+            @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+        }
+</div>
+    
+   }
+
+
+
 
             <div class="clearfix"> </div>
             <nav class="in">
@@ -222,4 +235,7 @@
     </div>
 
 
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
 </body>

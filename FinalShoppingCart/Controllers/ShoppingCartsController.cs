@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using FinalShoppingCart.Models;
+using Microsoft.AspNet.Identity;
 
 namespace FinalShoppingCart.Controllers
 {
@@ -17,9 +18,22 @@ namespace FinalShoppingCart.Controllers
         // GET: ShoppingCarts
         public ActionResult Index()
         {
-            var shoppingCarts = db.ShoppingCarts.Include(s => s.Item);
-            return View(shoppingCarts.ToList());
-        }
+            var user = db.Users.Find(User.Identity.GetUserId());
+            var shoppingCarts = db.ShoppingCarts.Where(s => s.CustomerId == user.Id).ToList();       
+            if (shoppingCarts != null)
+            {
+                return View(db.ShoppingCarts.ToList());
+                             
+            }
+
+            ViewBag.NoItem = "No item has been added";
+            return View();
+        } 
+            
+
+
+        
+    
 
         // GET: ShoppingCarts/Details/5
         public ActionResult Details(int? id)
@@ -39,15 +53,46 @@ namespace FinalShoppingCart.Controllers
         // GET: ShoppingCarts/Create
         public ActionResult Create()
         {
-            ViewBag.ItemId = new SelectList(db.Items, "Id", "Name");
+            ViewBag.ItemId = new SelectList(db.Items, "Id", "Name");          
             return View();
+            
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Create(int Itemid)
+        {
+            var user = db.Users.Find(User.Identity.GetUserId());
+            var exShopping = db.ShoppingCarts.Where(s => s.CustomerId == user.Id && s.ItemId == Itemid).ToList();
+            if (exShopping.Count == 0)
+            {
+                ShoppingCart shoppingCart = new ShoppingCart();
+                shoppingCart.CustomerId = user.Id;
+                shoppingCart.ItemId = Itemid;
+                shoppingCart.Item = db.Items.FirstOrDefault(i => i.Id == Itemid);
+                shoppingCart.Count = 1;
+                shoppingCart.Created = System.DateTime.Now;
+                db.ShoppingCarts.Add(shoppingCart);
+                db.SaveChanges();
+                return RedirectToAction("Index", "Items");
+            }
+
+            foreach (var items in exShopping)
+            {
+                items.Count++;
+                db.Entry(items).Property("Count").IsModified = true;
+            };
+
+            db.SaveChanges();
+
+            return RedirectToAction("Index", "Items");
         }
 
         // POST: ShoppingCarts/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
+        /*[HttpPost]
         [ValidateAntiForgeryToken]
+
         public ActionResult Create([Bind(Include = "Id,ItemId,CustomerId,Count,Created")] ShoppingCart shoppingCart)
         {
             if (ModelState.IsValid)
@@ -56,10 +101,15 @@ namespace FinalShoppingCart.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-
+            // Get current customer ID
+            shoppingCart.CustomerId = User.Identity.GetUserId();
+            //
             ViewBag.ItemId = new SelectList(db.Items, "Id", "Name", shoppingCart.ItemId);
+            
             return View(shoppingCart);
-        }
+        }*/
+
+
 
         // GET: ShoppingCarts/Edit/5
         public ActionResult Edit(int? id)

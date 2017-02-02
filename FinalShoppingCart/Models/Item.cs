@@ -16,5 +16,6 @@ namespace FinalShoppingCart.Models
         public string Description { get; set; }
         public DateTimeOffset Created { get; set; }
         public DateTimeOffset? Updated { get; set; }
+        
     }
 }

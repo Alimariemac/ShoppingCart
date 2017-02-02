@@ -62,8 +62,8 @@
 </div>
 
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
+   @* @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")*@
 </p>
 
 
@@ -161,7 +161,7 @@
                     <div class="clearfix"> </div>
                 </div>
                 <div class="product-go">
-                    <div class=" fashion-grid">
+                    <div class="fashion-grid">
                         <a href="#"><img class="fit-img5" src="~/Images/uploads/backpack.jpg" alt=""></a>
 
                     </div>
@@ -259,14 +259,21 @@
                     <ul class="tag-men">
                         <li>
                             <span>TAG</span>
-                            <span class="women1">: Women,</span>
+                            <span class="women1">: Women</span>
                         </li>
                         <li>
                             <span>SKU</span>
                             <span class="women1">: CK09</span>
                         </li>
                     </ul>
-                    <a href="#" class="add-cart item_add">ADD TO CART</a>
+
+                    @using (Html.BeginForm("Create", "ShoppingCarts", new { Itemid = Model.Id }, FormMethod.Post))
+
+                    {@Html.AntiForgeryToken()
+                        <button class="item_add"><p class="number item_price"><i> </i>ADD TO CART</p></button>}
+                        @* <a href="#" class="item_add"><p class="number item_price"><i> </i>@Html.DisplayFor(modelItem => item.Price)</p></a>}*/
+                             <a class="item_add"><p class="number item_price"><i> </i>@Html.DisplayFor(modelItem => item.Price)</p></a>
+                             <a href="#" class="add-cart item_add">ADD TO CART</a>*@
 
                 </div>
             </div>
@@ -276,7 +283,7 @@
                 <nav>
                     <ul class="cd-tabs-navigation">
                         <li><a data-content="fashion" href="#0">Description </a></li>
-                        <li><a data-content="cinema" href="#0">Addtional Informatioan</a></li>
+                        <li><a data-content="cinema" href="#0">Additional Information</a></li>
                         <li><a data-content="television" href="#0" class="selected ">Reviews (1)</a></li>
 
                     </ul>
@@ -307,7 +314,7 @@
                                 <img class="img-responsive" src="~/Images/co.png" alt="">
                             </div>
                             <div class="top-comment-right">
-                                <h6><a href="#">Hendri</a> - September 3, 2014</h6>
+                                <h6><a href="#">Hendri</a> - September 3, 2016</h6>
                                 <ul class="star-footer">
                                     <li><a href="#"><i> </i></a></li>
                                     <li><a href="#"><i> </i></a></li>
@@ -369,5 +376,7 @@
         <div class="clearfix"> </div>
     </div>
 </div>
-   
+  @section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
 </body>
