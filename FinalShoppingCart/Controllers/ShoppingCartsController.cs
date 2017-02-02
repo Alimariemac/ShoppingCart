@@ -16,6 +16,8 @@ namespace FinalShoppingCart.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: ShoppingCarts
+        [Authorize]
+        
         public ActionResult Index()
         {
             var user = db.Users.Find(User.Identity.GetUserId());
@@ -36,6 +38,7 @@ namespace FinalShoppingCart.Controllers
     
 
         // GET: ShoppingCarts/Details/5
+        [Authorize]
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -51,12 +54,14 @@ namespace FinalShoppingCart.Controllers
         }
 
         // GET: ShoppingCarts/Create
+        [Authorize]
         public ActionResult Create()
         {
             ViewBag.ItemId = new SelectList(db.Items, "Id", "Name");          
             return View();
             
         }
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(int Itemid)
@@ -71,6 +76,7 @@ namespace FinalShoppingCart.Controllers
                 shoppingCart.Item = db.Items.FirstOrDefault(i => i.Id == Itemid);
                 shoppingCart.Count = 1;
                 shoppingCart.Created = System.DateTime.Now;
+
                 db.ShoppingCarts.Add(shoppingCart);
                 db.SaveChanges();
                 return RedirectToAction("Index", "Items");
