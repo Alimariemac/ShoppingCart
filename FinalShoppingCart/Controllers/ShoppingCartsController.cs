@@ -175,6 +175,24 @@ namespace FinalShoppingCart.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
+        
+        public ActionResult DeleteAll()
+        {
+            var user = db.Users.Find(User.Identity.GetUserId());
+            var shoppingCarts = db.ShoppingCarts.Where(s => s.CustomerId == user.Id).ToList();
+            if (shoppingCarts != null)
+            {
+                foreach (var itemtodelete in shoppingCarts)
+                {
+                    db.ShoppingCarts.Remove(itemtodelete);             
+
+                }
+                db.SaveChanges();
+            }
+            return RedirectToAction("Index", "ShoppingCarts") ;
+        }
+
+
 
         protected override void Dispose(bool disposing)
         {

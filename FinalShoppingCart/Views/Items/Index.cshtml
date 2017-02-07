@@ -194,18 +194,20 @@
                 <img class="fit-img20" src="@Url.Content(item.MediaUrl)" alt="" />
                 <div class="pro-grid">
                    
-                    <span class="buy-in">Buy Now</span>
+                    <span class="buy-in">More Info</span>
                 </div>
             </a>
         </div>
         <p class="tun">@Html.DisplayFor(modelItem => item.Name)</p>
-        @using (Html.BeginForm("Create", "ShoppingCarts", new { Itemid = item.Id }, FormMethod.Post))
+        @using (Html.BeginForm("Create", "ShoppingCarts", new { Itemid = item.Id }, FormMethod.Post, new {id="addform" }))
 
         {@Html.AntiForgeryToken()        
-            <button class="item_add"><p class="number item_price"><i> </i>@Html.DisplayFor(modelItem => item.Price)</p></button>
-            /*<a href="#" class="item_add"><p class="number item_price"><i> </i>@Html.DisplayFor(modelItem => item.Price)</p></a>}*/
-            /*<a class="item_add"><p class="number item_price"><i> </i>@Html.DisplayFor(modelItem => item.Price)</p></a>*/
+           @* <button class="item_add"><p class="number item_price"><i> </i>@Html.DisplayFor(modelItem => item.Price)</p></button>*@
+            <a onclick="$(this).closest('form').submit();" class="item_add"><p class="number item_price"><i> </i>@Html.DisplayFor(modelItem => item.Price)</p></a>
         }
+            @*<a class="item_add"><p class="number item_price"><i> </i>@Html.DisplayFor(modelItem => item.Price)</p></a>*@
+      
+
         @if (User.IsInRole("Admin"))
         {
             @Html.ActionLink("Edit", "Edit", new { id = item.Id })
@@ -237,5 +239,6 @@
 
     @section Scripts {
         @Scripts.Render("~/bundles/jqueryval")
+        @Scripts.Render("~/scripts/main.js")
     }
 </body>
