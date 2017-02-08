@@ -51,6 +51,11 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
+              @using (Html.BeginForm("Delete", "ShoppingCarts", FormMethod.Post))
+              {
+                @Html.AntiForgeryToken()
+                <button type="submit">delete</button>
+                }
                 <input type="submit" value="Save" class="btn btn-default" />
             </div>
         </div>

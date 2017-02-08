@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<FinalShoppingCart.Models.ShoppingCart>
 @using Microsoft.AspNet.Identity
 
-@{
+@*@{
     ViewBag.Title = "Index";
 }
 
@@ -36,7 +36,7 @@
             <td>
                 @Html.DisplayFor(modelItem => item.CustomerId)
             </td>
-            @*@HttpContext.Current.User.Identity.GetUserId()*@
+            @HttpContext.Current.User.Identity.GetUserId()
             <td>
                 @Html.DisplayFor(modelItem => item.Count)
             </td>
@@ -51,7 +51,7 @@
         </tr>
     }
 
-</table>
+</table>*@
 
 <body>
     <div class="container">
@@ -73,7 +73,10 @@
                 </script>
 
                 <div class="cart-header">
-                    <div class="close1"> </div>
+                    @using (Html.BeginForm("Delete", "ShoppingCarts", new { id = item.Id }, FormMethod.Post, null))
+
+                    {@Html.AntiForgeryToken() <a href="#" onclick="$(this).closest('form').submit();"class="Item.Remove" ><div class="close1" > </div></a>}
+
                     <div class="cart-sec simpleCart_shelfItem">
                         <div class="cart-item cyc">
                             <img src=@Url.Content(item.Item.MediaUrl) class="img-responsive" alt="" />
@@ -98,26 +101,25 @@
                 </div>
             
                 <div class="col-md-3 cart-total">
-                    <a class="continue" href="#">Continue to basket</a>
                     <div class="price-details">
                         <h3>Price Details</h3>
                         <span>Total</span>
-                        <span class="total1">6200.00</span>
+                        <span class="total1">@Model.Sum(t => t.Item.Price * t.Count)</span>
                         <span>Discount</span>
                         <span class="total1">---</span>
                         <span>Delivery Charges</span>
-                        <span class="total1">150.00</span>
+                        <span class="total1">10.00</span>
                         <div class="clearfix"></div>
                     </div>
                     <ul class="total_price">
                         <li class="last_price"> <h4>TOTAL</h4></li>
-                        <li class="last_price"><span>6350.00</span></li>
+                        <li class="last_price"><span>@Model.Sum(t=> (t.Item.Price * t.Count)+10)</span></li>
                         <div class="clearfix"> </div>
                     </ul>
 
 
                     <div class="clearfix"></div>
-                    <a class="order" href="#">Place Order</a>
+                    <a class="order" href=@Url.Action("Create", "Orders")>Place Order</a>
                     <div class="total-item">
                         <h3>OPTIONS</h3>
                         <h4>COUPONS</h4>

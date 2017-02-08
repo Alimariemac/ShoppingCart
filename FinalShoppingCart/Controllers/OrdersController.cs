@@ -20,16 +20,7 @@ namespace FinalShoppingCart.Controllers
         {
             return View(db.Orders.ToList());
         }
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            Order order = db.Orders.Find(id);
-            db.Orders.Remove(order);
-            db.SaveChanges();
-            return RedirectToAction("Index");
-
-        }
+        
         /*private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Orders
@@ -166,17 +157,46 @@ namespace FinalShoppingCart.Controllers
             return View(order);
         }
 
-       /* // POST: Orders/Delete/5
+        // POST: Orders/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
+            
         {
+            var userid = User.Identity.GetUserId();
+            var shoppingcarts = db.ShoppingCarts.Where(s => s.CustomerId == userid);
+            foreach (var i in shoppingcarts) {
+                db.ShoppingCarts.Remove(i);
+            }
+
             Order order = db.Orders.Find(id);
             db.Orders.Remove(order);
             db.SaveChanges();
             return RedirectToAction("Index");
         }
-        */
+
+        public ActionResult Completed(int? id)
+        {
+            if (id !=null)
+
+            {   
+                var userid = User.Identity.GetUserId();
+                var shoppingcarts = db.ShoppingCarts.Where(s => s.CustomerId == userid);
+                var completeOrder = db.Orders.Find(id);
+                var orderDetail = completeOrder.OrderDetails.ToList();
+                db.Orders.Remove(completeOrder);
+
+                if (shoppingcarts != null) {
+                    foreach (var i in shoppingcarts) {
+                        db.ShoppingCarts.Remove(i);
+                    }                  
+                }
+
+                db.SaveChanges();
+            }
+
+             return View();
+        }
         protected override void Dispose(bool disposing)
         {
             if (disposing)

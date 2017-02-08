@@ -1,6 +1,6 @@
 ﻿@model IEnumerable<FinalShoppingCart.Models.Order>
 
-@{
+@*@{
     ViewBag.Title = "Index";
 }
 
@@ -84,4 +84,111 @@
     </tr>
 }
 
-</table>
+</table>*@
+<body>
+    @foreach (var item in Model)
+    {
+    <div class="container">
+        <div class="check">
+            <h1>Your Order</h1>@using (Html.BeginForm("Delete", "Orders", new { id = item.Id }, FormMethod.Post, null))
+
+            {@Html.AntiForgeryToken() <a href="#" onclick="$(this).closest('form').submit();"><h3>Delete Order</h3></a>}
+            <div class="col-md-9 cart-items">
+
+                @foreach (var detail in item.OrderDetails)
+                {
+
+                    <script>
+                    $(document).ready(function (c) {
+                        $('.close1').on('click', function (c) {
+                            $('.cart-header').fadeOut('slow', function (c) {
+                                $('.cart-header').remove();
+                            });
+                        });
+                    });
+                    </script>
+
+                    <div class="cart-header">
+                        @using (Html.BeginForm("Delete", "ShoppingCarts", new { id = item.Id }, FormMethod.Post, null))
+
+                        {@Html.AntiForgeryToken() <a href="#" onclick="$(this).closest('form').submit();" class="Item.Remove"><div class="close1"> </div></a>}
+
+                        <div class="cart-sec simpleCart_shelfItem">
+                            <div class="cart-item cyc">
+                                <img src=@Url.Content(detail.Item.MediaUrl) class="img-responsive" alt="" />
+                            </div>
+                            <div class="cart-item-info">
+                                <h3><a href="#">@Html.DisplayFor(modelItem => detail.Item.Name)</a></h3>
+                                <ul class="qty">
+                                    <li><p>Qty : @Html.DisplayFor(modelItem => detail.Quantity)</p></li>
+                                </ul>
+
+                                <div class="delivery">
+                                    <p>Price : @Html.DisplayFor(modelItem => detail.UnitPrice)</p>
+                                    <span>Delivered in 2-3 business days</span>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </div>
+                            <div class="clearfix"></div>
+
+                        </div>
+                    </div>
+                }
+            </div>
+
+            <div class="col-md-3 cart-total">
+                <div class="price-details">
+                    <h3>Price Details</h3>
+                    <span>Total</span>
+                    <span class="total1">@Html.DisplayFor(modelItem => item.Total)</span>
+                    <span>Discount</span>
+                    <span class="total1">---</span>
+                    <span>Delivery Charges</span>
+                    <span class="total1">10.00</span>
+                    <div class="clearfix"></div>
+                </div>
+                <ul class="total_price">
+                    <li class="last_price"> <h4>TOTAL</h4></li>
+                    <li class="last_price"><span>@Html.DisplayFor(modelItem => item.Total)ADD TEN</span></li> 
+                    <div class="clearfix"></div> 
+                </ul>
+                <br>
+                <div class="price-details">
+                    <h3>Shipping Address</h3>
+                    <span>@Html.DisplayNameFor(model => model.Address)</span>
+                    <span>@Html.DisplayFor(modelItem => item.Address)</span>
+                    <span>@Html.DisplayNameFor(model => model.City)</span>
+                    <span>@Html.DisplayFor(modelItem => item.City)</span>
+                    <span>@Html.DisplayNameFor(model => model.State)</span>
+                    <span>@Html.DisplayFor(modelItem => item.State)</span>
+                    <span>@Html.DisplayNameFor(model => model.Zipcode)</span>
+                    <span>@Html.DisplayFor(modelItem => item.Zipcode)</span>
+                    <span>@Html.DisplayNameFor(model => model.Country)</span>
+                    <span>@Html.DisplayFor(modelItem => item.Country)</span>
+                    <span>@Html.DisplayNameFor(model => model.Phone)</span>
+                    <span>@Html.DisplayFor(modelItem => item.Phone)</span>
+                    <div class="clearfix"></div>
+                </div>
+
+                <div class="clearfix"></div>
+                @using (Html.BeginForm("Completed", "Orders", new { id = item.Id }, FormMethod.Post, null))
+
+                {@Html.AntiForgeryToken()
+                <a class="order" href=@Url.Action("Complete","Orders")>Confirm Order</a>}
+
+                <div class="total-item">
+                    <h3>OPTIONS</h3>
+                    <h4>COUPONS</h4>
+                    <a class="cpns" href="#">Apply Coupons</a>
+                    <p><a href="#">Log In</a> to use accounts - linked coupons</p>
+                </div>
+            </div>
+
+            <div class="clearfix"> </div>
+           
+        </div>
+    </div>
+    
+    }
+    
+</body>

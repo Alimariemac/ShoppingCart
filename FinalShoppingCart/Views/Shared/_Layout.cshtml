@@ -54,8 +54,9 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                                 <img src="~/Images/cart.png" alt="" />
                             </h3>
                         </a>
-                        <p><a href="javascript:;" class="simpleCart_empty">Empty Cart</a></p>
 
+
+                       <p><a href=@Url.Action("DeleteAll", "ShoppingCarts") class="simpleCart_empty">Empty Cart</a></p>          
                     </div>
                     <div class="clearfix"> </div>
                 </div>
@@ -76,14 +77,12 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                             @Html.ActionLink("Items", "Index", new { controller = "Items"}, new { @class = "color2" })
                         </li>
                         <li>
-                            @Html.ActionLink("Order", "Index", new { controller = "Orders"}, new { @class = "color3" })
+                            @Html.ActionLink("Shopping Cart", "Index", new { controller = "ShoppingCarts" }, new { @class = "color4" })
                         </li>
                         <li>
-                            @Html.ActionLink("Shopping Cart", "Index", new { controller = "ShoppingCarts"}, new { @class = "color4" })
+                            @Html.ActionLink("Checkout", "Index", new { controller = "Orders"}, new { @class = "color3" })
                         </li>
-                        <li>
-                            @Html.ActionLink("Order Details", "Index", new { controller = "OrderDetails"}, new { @class = "color6" })
-                        </li>
+                        
                     </ul>
                 </div>
 

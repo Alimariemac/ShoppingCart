@@ -199,7 +199,7 @@
             </a>
         </div>
         <p class="tun">@Html.DisplayFor(modelItem => item.Name)</p>
-        @using (Html.BeginForm("Create", "ShoppingCarts", new { Itemid = item.Id }, FormMethod.Post, new {id="addform" }))
+        @using (Html.BeginForm("Create", "ShoppingCarts", new { Itemid = item.Id }, FormMethod.Post))
 
         {@Html.AntiForgeryToken()        
            @* <button class="item_add"><p class="number item_price"><i> </i>@Html.DisplayFor(modelItem => item.Price)</p></button>*@

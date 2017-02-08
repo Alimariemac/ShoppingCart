@@ -162,7 +162,7 @@ namespace FinalShoppingCart.Controllers
             {
                 return HttpNotFound();
             }
-            return View(shoppingCart);
+            return View();
         }
 
         // POST: ShoppingCarts/Delete/5
@@ -173,7 +173,7 @@ namespace FinalShoppingCart.Controllers
             ShoppingCart shoppingCart = db.ShoppingCarts.Find(id);
             db.ShoppingCarts.Remove(shoppingCart);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return View();
         }
         
         public ActionResult DeleteAll()

@@ -40,43 +40,26 @@
     </div>
 </div>
 
-<div class="content">
+<div class="content"> 
     <div class="container">
         <div class="content-top">
             <h1>NEW RELEASED</h1>
             <div class="grid-in">
+@*@foreach (var item in Model.Items.take(3))
+{
                 <div class="col-md-4 grid-top">
-                    <a href="single.html" class="b-link-stripe b-animate-go  thickbox">
-                        <img class="img-responsive" src="~/Images/bag1.jpeg" alt="">
+                    <a href=@Url.Action("Details", new { id = item.Id })
+                        class="b-link-stripe b-animate-go  thickbox">
+                        <img class="img-responsive" src=@Url.Content(item.MediaUrl) alt="">
                         <div class="b-wrapper">
                             <h3 class="b-animate b-from-left    b-delay03 ">
-                                <span>Leather Bag</span>
+                                <span>ITEM</span>
                             </h3>
                         </div>
                     </a>
-                </div>
-                <div class="col-md-4 grid-top">
-                    <a href="single.html" class="b-link-stripe b-animate-go  thickbox">
-                        <img class="img-responsive" src="~/Images/luggage.jpg" alt="">
-                        <div class="b-wrapper">
-                            <h3 class="b-animate b-from-left    b-delay03 ">
-                                <span>Luggage</span>
-                            </h3>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-md-4 grid-top">
-                    <a href="single.html" class="b-link-stripe b-animate-go  thickbox">
-                        <img class="img-responsive" src="~/Images/backpack.jpg" alt="">
-                        <div class="b-wrapper">
-                            <h3 class="b-animate b-from-left    b-delay03 ">
-                                <span>Backpack</span>
-                            </h3>
-                        </div>
-                    </a>
-                </div>
-                <div class="clearfix"> </div>
-            </div>
+                </div>}*@
+
+               
             <div class="grid-in">
                 <div class="col-md-4 grid-top">
                     <a href="single.html" class="b-link-stripe b-animate-go  thickbox">
