@@ -185,7 +185,9 @@
                 </div>
             </div>
    <!--Items to buy section-->
-            
+          <div> @if (User.IsInRole("Admin"))
+           {@Html.ActionLink("Create New", "Create")} </div>
+
    @foreach (var item in Model)
    {
     <div class="col-md-4 bottom-cd simpleCart_shelfItem" style="padding-bottom:2em;">
@@ -198,6 +200,7 @@
                 </div>
             </a>
         </div>
+        
         <p class="tun">@Html.DisplayFor(modelItem => item.Name)</p>
         @using (Html.BeginForm("Create", "ShoppingCarts", new { Itemid = item.Id }, FormMethod.Post))
 

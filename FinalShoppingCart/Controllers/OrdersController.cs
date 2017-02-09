@@ -20,7 +20,31 @@ namespace FinalShoppingCart.Controllers
         {
             return View(db.Orders.ToList());
         }
-        
+        public ActionResult Completed(int? id)
+        {
+            if (id != null)
+
+            {
+                var userid = User.Identity.GetUserId();
+                var shoppingcarts = db.ShoppingCarts.Where(s => s.CustomerId == userid);
+                var completeOrder = db.Orders.Find(id);
+                var orderDetail = completeOrder.OrderDetails.ToList();
+                db.Orders.Remove(completeOrder);
+
+                if (shoppingcarts != null)
+                {
+                    foreach (var i in shoppingcarts)
+                    {
+                        db.ShoppingCarts.Remove(i);
+                    }
+                }
+
+                db.SaveChanges();
+            }
+
+            return View();
+        }
+
         /*private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Orders
@@ -108,9 +132,9 @@ namespace FinalShoppingCart.Controllers
             }
 
             return View(order);
-        }
+        }*/
 
-        // GET: Orders/Edit/5
+         /*GET: Orders/Edit/5*/
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -123,7 +147,7 @@ namespace FinalShoppingCart.Controllers
                 return HttpNotFound();
             }
             return View(order);
-        }*/
+        }
 
 
         // POST: Orders/Edit/5
@@ -175,28 +199,8 @@ namespace FinalShoppingCart.Controllers
             return RedirectToAction("Index");
         }
 
-        public ActionResult Completed(int? id)
-        {
-            if (id !=null)
+        
 
-            {   
-                var userid = User.Identity.GetUserId();
-                var shoppingcarts = db.ShoppingCarts.Where(s => s.CustomerId == userid);
-                var completeOrder = db.Orders.Find(id);
-                var orderDetail = completeOrder.OrderDetails.ToList();
-                db.Orders.Remove(completeOrder);
-
-                if (shoppingcarts != null) {
-                    foreach (var i in shoppingcarts) {
-                        db.ShoppingCarts.Remove(i);
-                    }                  
-                }
-
-                db.SaveChanges();
-            }
-
-             return View();
-        }
         protected override void Dispose(bool disposing)
         {
             if (disposing)

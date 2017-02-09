@@ -32,6 +32,30 @@ namespace FinalShoppingCart.Controllers
             return View();
         } 
             
+        [Authorize]
+        public PartialViewResult Cart()
+        {
+            var user = db.Users.Find(User.Identity.GetUserId());
+            if (user != null)
+            {
+                var shoppingCarts = db.ShoppingCarts.Where(s => s.CustomerId == user.Id);
+                decimal shoptotal = 0;
+                int counttotal = 0;
+                if (shoppingCarts != null)
+                {
+                    foreach (var n in shoppingCarts)
+                    {
+                        shoptotal += db.Items.Where(t => t.Id == n.ItemId).Sum(t => t.Price) * n.Count;
+                        counttotal += n.Count;
+                    }
+                    ViewBag.shoptotal = shoptotal;
+                    ViewBag.counttotal = counttotal;
+                }
+                else shoptotal = 0;
+                counttotal = 0;
+            }
+            return PartialView("~/Views/Shared/ShoppingCartTop.cshtml");
+        }
 
 
         
@@ -93,6 +117,7 @@ namespace FinalShoppingCart.Controllers
             return RedirectToAction("Index", "Items");
         }
 
+
         // POST: ShoppingCarts/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -147,8 +172,11 @@ namespace FinalShoppingCart.Controllers
                 return RedirectToAction("Index");
             }
             ViewBag.ItemId = new SelectList(db.Items, "Id", "Name", shoppingCart.ItemId);
+            
             return View(shoppingCart);
         }
+
+        
 
         // GET: ShoppingCarts/Delete/5
         public ActionResult Delete(int? id)
@@ -162,7 +190,7 @@ namespace FinalShoppingCart.Controllers
             {
                 return HttpNotFound();
             }
-            return View();
+            return View(shoppingCart);
         }
 
         // POST: ShoppingCarts/Delete/5
@@ -173,7 +201,7 @@ namespace FinalShoppingCart.Controllers
             ShoppingCart shoppingCart = db.ShoppingCarts.Find(id);
             db.ShoppingCarts.Remove(shoppingCart);
             db.SaveChanges();
-            return View();
+            return RedirectToAction("Index");
         }
         
         public ActionResult DeleteAll()

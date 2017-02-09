@@ -8,7 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using FinalShoppingCart.Models;
 using System.IO;
-using ShoppingApp.Models;
+using FinalShoppingCart.Models;
 
 namespace FinalShoppingCart.Controllers
 {
