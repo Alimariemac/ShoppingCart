@@ -24,14 +24,26 @@ namespace FinalShoppingCart.Controllers
             var shoppingCarts = db.ShoppingCarts.Where(s => s.CustomerId == user.Id).ToList();       
             if (shoppingCarts != null)
             {
+                decimal cartTotal = 0;
+                
+
+                foreach (var x in shoppingCarts)
+                {
+                    cartTotal += db.Items.Where(t => t.Id == x.ItemId).Sum(t => t.Price) * x.Count;
+                    
+                }
+                ViewBag.price = cartTotal;
+                ViewBag.net = cartTotal+10;
                 return View(shoppingCarts);
                              
             }
-
+            ViewBag.price = 0;
+            ViewBag.net = 0;
             ViewBag.NoItem = "No item has been added";
             return View();
-        } 
-            
+        }
+
+        //GET: Shared/_CartItem 
         [Authorize]
         public PartialViewResult Cart()
         {
@@ -39,27 +51,31 @@ namespace FinalShoppingCart.Controllers
             if (user != null)
             {
                 var shoppingCarts = db.ShoppingCarts.Where(s => s.CustomerId == user.Id);
+
                 decimal shoptotal = 0;
                 int counttotal = 0;
-                if (shoppingCarts != null)
+
+                foreach (var count in shoppingCarts)
                 {
-                    foreach (var n in shoppingCarts)
-                    {
-                        shoptotal += db.Items.Where(t => t.Id == n.ItemId).Sum(t => t.Price) * n.Count;
-                        counttotal += n.Count;
-                    }
-                    ViewBag.shoptotal = shoptotal;
-                    ViewBag.counttotal = counttotal;
+                    counttotal += count.Count;
+                    shoptotal += db.Items.Where(t => t.Id == count.ItemId).Sum(t => t.Price) * count.Count;
                 }
-                else shoptotal = 0;
-                counttotal = 0;
+                ViewBag.MoneyTotal = shoptotal;
+                ViewBag.AmountTotal = counttotal;
+
             }
+            else
+            {
+                ViewBag.MoneyTotal = 0;
+                ViewBag.AmountTotal = 0;
+            }
+
             return PartialView("~/Views/Shared/ShoppingCartTop.cshtml");
         }
 
 
-        
-    
+
+
 
         // GET: ShoppingCarts/Details/5
         [Authorize]

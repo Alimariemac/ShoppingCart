@@ -20,6 +20,8 @@ namespace FinalShoppingCart.Controllers
         {
             return View(db.Orders.ToList());
         }
+
+
         public ActionResult Completed(int? id)
         {
             if (id != null)
@@ -37,6 +39,7 @@ namespace FinalShoppingCart.Controllers
                     {
                         db.ShoppingCarts.Remove(i);
                     }
+                    
                 }
 
                 db.SaveChanges();

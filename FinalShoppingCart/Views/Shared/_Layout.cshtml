@@ -52,7 +52,10 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                                 <ul>
                                 <li>
                                   
-                                    @Html.Partial("ShoppingCartTop", "ShoppingCart")
+                                   @if (Request.IsAuthenticated)
+                                   {
+                                       Html.RenderAction("Cart", "ShoppingCarts");
+                                   }
                                     </li>
                                     <li>
                                     </li>
@@ -92,10 +95,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                         
                     </ul>
                 </div>
-                @if (Request.IsAuthenticated)
-                {
-                    Html.RenderAction("Cart", "ShoppingCarts");
-                }
+                
                 <div class="clearfix"> </div>
             </div>
         </div>

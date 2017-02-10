@@ -105,7 +105,7 @@
                     <div class="price-details">
                         <h3>Price Details</h3>
                         <span>Total</span>
-                        <span class="total1">@Model.Sum(t => t.Item.Price * t.Count)</span>
+                        <span class="total1">@ViewBag.price</span>
                         <span>Discount</span>
                         <span class="total1">---</span>
                         <span>Delivery Charges</span>
@@ -115,7 +115,7 @@
                     <ul class="total_price">
                         <li class="last_price"> <h4>TOTAL</h4></li>
                         <li class="last_price"><span>
-                        @Model.Sum(t => t.Item.Price * t.Count+10)</span></li>
+                        @ViewBag.net</span></li>
                         <div class="clearfix"> </div>
                     </ul>
 

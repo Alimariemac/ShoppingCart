@@ -148,11 +148,8 @@
                     <div class="clearfix"></div>
                 </div>
                 <ul class="total_price">
-                    <li class="last_price"> <h4>TOTAL</h4></li>
-                    <li class="last_price"><span>
-                        
-
-                     
+                    <li class="last_price"><h4>TOTAL</h4></li>
+                    <li class="last_price"><span>@Model.Sum(t => t.Total + 10) 
                         </span></li> 
                     <div class="clearfix"></div> 
                 </ul>
